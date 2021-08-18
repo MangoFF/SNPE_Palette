@@ -1,0 +1,70 @@
+[
+    {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_submit.png.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\drawable-xhdpi\\submit.png"
+    },
+    {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_eraser.png.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\drawable-xhdpi\\eraser.png"
+    },
+    {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\drawable_circle.xml.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\drawable\\circle.xml"
+    },
+    {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\menu_main.xml.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\menu\\main.xml"
+    },
+    {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_undo.png.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\drawable-xhdpi\\undo.png"
+    },
+    {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_delete.png.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\drawable-xhdpi\\delete.png"
+    },
+    {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_icon.png.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\drawable-xhdpi\\icon.png"
+    },
+    {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_redo.png.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\drawable-xhdpi\\redo.png"
+    },
+    {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_save.png.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\drawable-xhdpi\\save.png"
+    },
+    {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_photo.png.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\drawable-xhdpi\\photo.png"
+    },
+    {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\layout_popup_sketch_eraser.xml.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\layout\\popup_sketch_eraser.xml"
+    },
+    {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_bg_popup.9.png.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\drawable-xhdpi\\bg_popup.9.png"
+    },
+    {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_flowers.bmp.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\drawable-xhdpi\\flowers.bmp"
+    },
+    {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\layout_popup_sketch_stroke.xml.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\layout\\popup_sketch_stroke.xml"
+    },
+    {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_brush.png.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\drawable-xhdpi\\brush.png"
+    },
+    {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_sketch.xml.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\layout\\fragment_sketch.xml"
+    }
+]

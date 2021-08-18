@@ -21,6 +21,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service
+            android:name=".Model.ModelExtractionService"
+            android:exported="false">
+        </service>
+        <provider
+            android:name="com.left.drawingboard.Model.UserContentProvider"
+            android:authorities="snpe"
+            android:enabled="true"
+            android:exported="false">
+        </provider>
     </application>
 
 </manifest>

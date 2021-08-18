@@ -1,10 +1,13 @@
 package com.left.drawingboard.fragment;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -26,6 +29,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -35,6 +39,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.OpacityBar;
 import com.larswerkman.holocolorpicker.SVBar;
+import com.left.drawingboard.MainActivity;
 import com.left.drawingboard.R;
 import com.left.drawingboard.SketchView;
 import com.yancy.imageselector.ImageConfig;
@@ -53,28 +58,19 @@ import jp.co.cyberagent.android.gpuimage.GPUImageSketchFilter;
 
 
 public class SketchFragment extends Fragment implements SketchView.OnDrawChangedListener {
-
-    @Bind(R.id.sketch_stroke)
     ImageView stroke;
-    @Bind(R.id.sketch_eraser)
     ImageView eraser;
-    @Bind(R.id.drawing)
     SketchView mSketchView;
-    @Bind(R.id.sketch_undo)
     ImageView undo;
-    @Bind(R.id.sketch_redo)
     ImageView redo;
-    @Bind(R.id.sketch_erase)
     ImageView erase;
-    @Bind(R.id.sketch_save)
-    ImageView sketchSave;
-    @Bind(R.id.sketch_photo)
-    ImageView sketchPhoto;
-    @Bind(R.id.iv_painted)
+//    ImageView sketchSave;
+//    ImageView sketchPhoto;
     ImageView ivPainted;
-    @Bind(R.id.iv_original)
     ImageView ivOriginal;
-
+    ImageView Sketch_preview=null;
+    ImageView suibmit=null;
+    TextView levelname=null;
     private int seekBarStrokeProgress, seekBarEraserProgress;
     private View popupStrokeLayout, popupEraserLayout;
     private ImageView strokeImageView, eraserImageView;
@@ -89,6 +85,15 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
     private Bitmap grayBmp;
     private int mScreenWidth;
     private int mScreenHeight;
+    int level=-1;
+    MainActivity mContext;
+    String[] ClassName={"flowers","grass"};
+    @SuppressLint("ValidFragment")
+    public SketchFragment(int level_id,MainActivity context)
+    {
+        level=level_id-1;
+        mContext=context;
+    }
 
 
     @Override
@@ -102,6 +107,24 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sketch, container, false);
         ButterKnife.bind(this, view);
+        mSketchView=view.findViewById(R.id.drawing);
+        stroke=view.findViewById(R.id.sketch_stroke);
+        eraser=view.findViewById(R.id.sketch_eraser);
+        mSketchView=view.findViewById(R.id.drawing);
+        undo=view.findViewById(R.id.sketch_undo);
+        redo=view.findViewById(R.id.sketch_redo);
+        erase=view.findViewById(R.id.sketch_erase);
+//        sketchSave=view.findViewById(R.id.sketch_save);
+//        sketchPhoto=view.findViewById(R.id.sketch_photo);
+        ivPainted=view.findViewById(R.id.iv_painted);
+        ivOriginal=view.findViewById(R.id.iv_original);
+        Sketch_preview=view.findViewById(R.id.sketch_preview);
+        suibmit= view.findViewById(R.id.submit_button);
+        levelname=view.findViewById(R.id.level_name);
+
+        Resources res = getContext().getResources();
+        Sketch_preview.setImageBitmap(BitmapFactory.decodeResource(res,res.getIdentifier(ClassName[level], "drawable", "com.left.drawingboard")));
+        levelname.setText(ClassName[level]);
 
         DisplayMetrics dm = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -109,10 +132,13 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
         mScreenWidth = dm.widthPixels;
         mScreenHeight = dm.heightPixels;
         // 给mSketchView设置宽高
-        FrameLayout.LayoutParams p = (FrameLayout.LayoutParams) mSketchView.getLayoutParams();
-        p.width = mScreenWidth;
-        p.height = mScreenHeight;
-        mSketchView.setLayoutParams(p);
+        if(mSketchView!=null)
+        {
+            FrameLayout.LayoutParams p = (FrameLayout.LayoutParams) mSketchView.getLayoutParams();
+            p.width = mScreenWidth;
+            p.height = mScreenHeight;
+            mSketchView.setLayoutParams(p);
+        }
 
         return view;
     }
@@ -180,51 +206,67 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
                 }).build().show();
             }
         });
-        // 保存画图
-        sketchSave.setOnClickListener(new OnClickListener() {
+        suibmit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mSketchView.getPaths().size() == 0) {
-                    Toast.makeText(getActivity(), "你还没有画图", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                //保存
-                new MaterialDialog.Builder(getActivity()).title("保存").negativeText("取消").inputType(InputType
-                        .TYPE_CLASS_TEXT).input("画图名称(.png)", "a.png", new MaterialDialog.InputCallback() {
-                            @Override
-                            public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                                if (input == null || input.length() == 0) {
-                                    Toast.makeText(getActivity(), "请输入画图名称", Toast.LENGTH_SHORT).show();
-                                } else if (input.length() <= 4 || !input.subSequence(input.length() - 4, input.length()).toString().equals(".png")) {
-                                    Toast.makeText(getActivity(), "请输入正确的画图名称(.png)", Toast.LENGTH_SHORT).show();
-                                } else
-                                    save(input.toString());
-                            }
-                        }).show();
-            }
-        });
-        sketchPhoto.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //选择图片
-                ImageConfig imageConfig = new ImageConfig.Builder(new ImageLoader() {
+                new MaterialDialog.Builder(getActivity()).content("确认提交？").positiveText("确认")
+                        .negativeText("取消").callback(new MaterialDialog.ButtonCallback() {
                     @Override
-                    public void displayImage(Context context, String path, ImageView imageView) {
-                        Glide.with(context).load(path).placeholder(com.yancy.imageselector.R.mipmap.imageselector_photo).centerCrop().into(imageView);
+                    public void onPositive(MaterialDialog dialog) {
+                        //在这里写识别的代码
+                        mSketchView.erase();
+                        // 记得把ivPainted、ivOriginal置空
+                        ivPainted.setImageBitmap(null);
+                        ivOriginal.setImageBitmap(null);
                     }
-                }).steepToolBarColor(getResources().getColor(R.color.colorPrimary)).titleBgColor(getResources().getColor(R.color.colorPrimary))
-                        .titleSubmitTextColor(getResources().getColor(R.color.white)).titleTextColor(getResources().getColor(R.color.white))
-                        // 开启单选   （默认为多选）
-                        .singleSelect()
-                        // 开启拍照功能 （默认关闭）
-                        .showCamera()
-                        // 拍照后存放的图片路径（默认 /temp/picture） （会自动创建）
-                        .filePath("/DrawingBoard/Pictures")
-                        .build();
-                // 开启图片选择器
-                ImageSelector.open(getActivity(), imageConfig);
+                }).build().show();
             }
         });
+//        // 保存画图
+//        sketchSave.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mSketchView.getPaths().size() == 0) {
+//                    Toast.makeText(getActivity(), "你还没有画图", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                //保存
+//                new MaterialDialog.Builder(getActivity()).title("保存").negativeText("取消").inputType(InputType
+//                        .TYPE_CLASS_TEXT).input("画图名称(.png)", "a.png", new MaterialDialog.InputCallback() {
+//                            @Override
+//                            public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+//                                if (input == null || input.length() == 0) {
+//                                    Toast.makeText(getActivity(), "请输入画图名称", Toast.LENGTH_SHORT).show();
+//                                } else if (input.length() <= 4 || !input.subSequence(input.length() - 4, input.length()).toString().equals(".png")) {
+//                                    Toast.makeText(getActivity(), "请输入正确的画图名称(.png)", Toast.LENGTH_SHORT).show();
+//                                } else
+//                                    save(input.toString());
+//                            }
+//                        }).show();
+//            }
+//        });
+//        sketchPhoto.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //选择图片
+//                ImageConfig imageConfig = new ImageConfig.Builder(new ImageLoader() {
+//                    @Override
+//                    public void displayImage(Context context, String path, ImageView imageView) {
+//                        Glide.with(context).load(path).placeholder(com.yancy.imageselector.R.mipmap.imageselector_photo).centerCrop().into(imageView);
+//                    }
+//                }).steepToolBarColor(getResources().getColor(R.color.colorPrimary)).titleBgColor(getResources().getColor(R.color.colorPrimary))
+//                        .titleSubmitTextColor(getResources().getColor(R.color.white)).titleTextColor(getResources().getColor(R.color.white))
+//                        // 开启单选   （默认为多选）
+//                        .singleSelect()
+//                        // 开启拍照功能 （默认关闭）
+//                        .showCamera()
+//                        // 拍照后存放的图片路径（默认 /temp/picture） （会自动创建）
+//                        .filePath("/DrawingBoard/Pictures")
+//                        .build();
+//                // 开启图片选择器
+//                ImageSelector.open(getActivity(), imageConfig);
+//            }
+//        });
 
         // Inflate布局文件
         LayoutInflater inflaterStroke = (LayoutInflater) getActivity().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -261,49 +303,49 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
         v.setAlpha(alpha);
     }
 
-    public void save(final String imgName) {
-        dialog = new MaterialDialog.Builder(getActivity()).title("保存画图").content("保存中...").progress(true, 0).progressIndeterminateStyle(true).show();
-        bitmap = mSketchView.getBitmap();
-
-        new AsyncTask() {
-
-            @Override
-            protected Object doInBackground(Object[] params) {
-
-                if (bitmap != null) {
-                    try {
-                        String filePath = "/mnt/sdcard/DrawingBoard/";
-                        File dir = new File(filePath);
-                        if (!dir.exists()) {
-                            dir.mkdirs();
-                        }
-                        File f = new File(filePath, imgName);
-                        if (!f.exists()) {
-                            f.createNewFile();
-                        }
-                        FileOutputStream out = new FileOutputStream(f);
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
-                        out.close();
-
-                        dialog.dismiss();
-                        return "保存画图成功" + filePath + imgName;
-                    } catch (Exception e) {
-
-                        dialog.dismiss();
-                        return "保存画图失败" + e.getMessage();
-                    }
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                Toast.makeText(getActivity(), (String) o, Toast.LENGTH_SHORT).show();
-
-            }
-        }.execute("");
-    }
+//    public void save(final String imgName) {
+//        dialog = new MaterialDialog.Builder(getActivity()).title("保存画图").content("保存中...").progress(true, 0).progressIndeterminateStyle(true).show();
+//        bitmap = mSketchView.getBitmap();
+//
+//        new AsyncTask() {
+//
+//            @Override
+//            protected Object doInBackground(Object[] params) {
+//
+//                if (bitmap != null) {
+//                    try {
+//                        String filePath = "/mnt/sdcard/DrawingBoard/";
+//                        File dir = new File(filePath);
+//                        if (!dir.exists()) {
+//                            dir.mkdirs();
+//                        }
+//                        File f = new File(filePath, imgName);
+//                        if (!f.exists()) {
+//                            f.createNewFile();
+//                        }
+//                        FileOutputStream out = new FileOutputStream(f);
+//                        bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+//                        out.close();
+//
+//                        dialog.dismiss();
+//                        return "保存画图成功" + filePath + imgName;
+//                    } catch (Exception e) {
+//
+//                        dialog.dismiss();
+//                        return "保存画图失败" + e.getMessage();
+//                    }
+//                }
+//                return null;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(Object o) {
+//                super.onPostExecute(o);
+//                Toast.makeText(getActivity(), (String) o, Toast.LENGTH_SHORT).show();
+//
+//            }
+//        }.execute("");
+//    }
 
     // 显示弹出调色板
     private void showPopup(View anchor, final int eraserOrStroke) {

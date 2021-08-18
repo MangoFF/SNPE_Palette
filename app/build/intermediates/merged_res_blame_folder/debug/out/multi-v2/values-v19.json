@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v19\\values-v19.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\93911\\.gradle\\caches\\transforms-2\\files-2.1\\2c6ac21a6ca0a92b2c41eb72ff398a13\\imageselector-1.3.0\\res\\values-v19\\values-v19.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "254"
+                    }
+                }
+            ]
+        }
+    ]
+}
