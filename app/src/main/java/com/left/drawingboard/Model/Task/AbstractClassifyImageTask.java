@@ -21,6 +21,8 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.Set;
 
+import static android.view.View.VISIBLE;
+
 public abstract class AbstractClassifyImageTask extends AsyncTask<Bitmap, Void, String[]> {
 
     private static final String LOG_TAG = AbstractClassifyImageTask.class.getSimpleName();
@@ -67,6 +69,9 @@ public abstract class AbstractClassifyImageTask extends AsyncTask<Bitmap, Void, 
         if (labels.length > 0) {
             //mController.onClassificationResult(labels[0]);
             //mController.mview.ShowModelRes.setText(labels[0]);
+            //mController.mview.fragment.resultShow.setVisibility(VISIBLE);
+            mController.mview.fragment.debug.setText(String.format("Class:%s Score:%s \nClass:%s Score:%s \nClass:%s Score:%s \n",labels[0],labels[1],labels[2],labels[3],labels[4],labels[5]));
+            mController.mview.fragment.showDrawScore(labels);
         } else {
             //mController.onClassificationFailed();
         }
@@ -105,7 +110,9 @@ public abstract class AbstractClassifyImageTask extends AsyncTask<Bitmap, Void, 
         final int[] pixels = new int[image.getWidth() * image.getHeight()];
         image.getPixels(pixels, 0, image.getWidth(), 0, 0,
                 image.getWidth(), image.getHeight());
-
+        //用于均值化，标准化
+        final float[] mean={(float)0.485, (float)0.456, (float) 0.406};
+        final float[] std={(float)0.229, (float)0.224, (float) 0.225};
         final float[] pixelsBatched = new float[pixels.length * 3];
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
@@ -113,9 +120,9 @@ public abstract class AbstractClassifyImageTask extends AsyncTask<Bitmap, Void, 
                 final int batchIdx = idx * 3;
 
                 final float[] rgb = extractColorChannels(pixels[idx]);
-                pixelsBatched[batchIdx]     = rgb[0];
-                pixelsBatched[batchIdx + 1] = rgb[1];
-                pixelsBatched[batchIdx + 2] = rgb[2];
+                pixelsBatched[batchIdx]     = (rgb[0]/255-mean[0])/std[0];
+                pixelsBatched[batchIdx + 1] = (rgb[1]/255-mean[1])/std[1];
+                pixelsBatched[batchIdx + 2] = (rgb[2]/255-mean[2])/std[2];
             }
         }
         return pixelsBatched;

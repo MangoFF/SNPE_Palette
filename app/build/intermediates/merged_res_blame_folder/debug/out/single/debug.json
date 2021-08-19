@@ -4,6 +4,14 @@
         "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\drawable-xhdpi\\submit.png"
     },
     {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\raw_inception_v3_quantized.zip.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\raw\\inception_v3_quantized.zip"
+    },
+    {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\layout_sore_sub.xml.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\layout\\sore_sub.xml"
+    },
+    {
         "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_eraser.png.flat",
         "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\drawable-xhdpi\\eraser.png"
     },
@@ -22,6 +30,10 @@
     {
         "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_delete.png.flat",
         "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\drawable-xhdpi\\delete.png"
+    },
+    {
+        "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_airplane.png.flat",
+        "source": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\src\\main\\res\\drawable-xhdpi\\airplane.png"
     },
     {
         "merged": "C:\\Users\\93911\\Desktop\\qualcomm\\DrawingBoard\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_icon.png.flat",

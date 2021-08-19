@@ -1,3 +1,17 @@
+com/left/drawingboard/SketchView.java
+ com.left.drawingboard.SketchView
+ com.left.drawingboard.SketchView$OnDrawChangedListener
+com/left/drawingboard/Model/Model.java
+ com.left.drawingboard.Model.Model
+ com.left.drawingboard.Model.Model$1
+com/left/drawingboard/Model/UserContentProvider.java
+ com.left.drawingboard.Model.UserContentProvider
+com/left/drawingboard/Model/AbstractViewController.java
+ com.left.drawingboard.Model.AbstractViewController
+com/left/drawingboard/BuildConfig.java
+ com.left.drawingboard.BuildConfig
+com/left/drawingboard/Model/ModelExtractionService.java
+ com.left.drawingboard.Model.ModelExtractionService
 com/left/drawingboard/MainActivity.java
  com.left.drawingboard.MainActivity
 com/left/drawingboard/Model/ModelController.java
@@ -7,47 +21,34 @@ com/left/drawingboard/Model/ModelController.java
  com.left.drawingboard.Model.ModelController$3
  com.left.drawingboard.Model.ModelController$4
  com.left.drawingboard.Model.ModelController$SupportedTensorFormat
-com/left/drawingboard/Model/UserContentProvider.java
- com.left.drawingboard.Model.UserContentProvider
-com/left/drawingboard/Model/AbstractViewController.java
- com.left.drawingboard.Model.AbstractViewController
 com/left/drawingboard/fragment/SketchFragment.java
  com.left.drawingboard.fragment.SketchFragment
  com.left.drawingboard.fragment.SketchFragment$1
  com.left.drawingboard.fragment.SketchFragment$10
+ com.left.drawingboard.fragment.SketchFragment$11
  com.left.drawingboard.fragment.SketchFragment$2
  com.left.drawingboard.fragment.SketchFragment$3
  com.left.drawingboard.fragment.SketchFragment$4
  com.left.drawingboard.fragment.SketchFragment$5
- com.left.drawingboard.fragment.SketchFragment$5$1
  com.left.drawingboard.fragment.SketchFragment$6
  com.left.drawingboard.fragment.SketchFragment$6$1
  com.left.drawingboard.fragment.SketchFragment$7
+ com.left.drawingboard.fragment.SketchFragment$7$1
  com.left.drawingboard.fragment.SketchFragment$8
  com.left.drawingboard.fragment.SketchFragment$9
+com/left/drawingboard/Model/Task/ClassifyImageWithFloatTensorTask.java
+ com.left.drawingboard.Model.Task.ClassifyImageWithFloatTensorTask
+com/left/drawingboard/Model/Task/LoadImageTask.java
+ com.left.drawingboard.Model.Task.LoadImageTask
 com/left/drawingboard/Model/Task/LoadModelsTask.java
  com.left.drawingboard.Model.Task.LoadModelsTask
  com.left.drawingboard.Model.Task.LoadModelsTask$1
  com.left.drawingboard.Model.Task.LoadModelsTask$2
-com/left/drawingboard/SketchView.java
- com.left.drawingboard.SketchView
- com.left.drawingboard.SketchView$OnDrawChangedListener
 com/left/drawingboard/Model/Task/ClassifyImageWithUserBufferTf8Task.java
  com.left.drawingboard.Model.Task.ClassifyImageWithUserBufferTf8Task
  com.left.drawingboard.Model.Task.ClassifyImageWithUserBufferTf8Task$1
  com.left.drawingboard.Model.Task.ClassifyImageWithUserBufferTf8Task$Tf8Encoding
  com.left.drawingboard.Model.Task.ClassifyImageWithUserBufferTf8Task$Tf8Params
-com/left/drawingboard/Model/Model.java
- com.left.drawingboard.Model.Model
- com.left.drawingboard.Model.Model$1
-com/left/drawingboard/Model/ModelExtractionService.java
- com.left.drawingboard.Model.ModelExtractionService
-com/left/drawingboard/Model/Task/ClassifyImageWithFloatTensorTask.java
- com.left.drawingboard.Model.Task.ClassifyImageWithFloatTensorTask
-com/left/drawingboard/Model/Task/LoadImageTask.java
- com.left.drawingboard.Model.Task.LoadImageTask
-com/left/drawingboard/BuildConfig.java
- com.left.drawingboard.BuildConfig
 com/left/drawingboard/Model/Task/AbstractClassifyImageTask.java
  com.left.drawingboard.Model.Task.AbstractClassifyImageTask
 com/left/drawingboard/Model/Task/LoadNetworkTask.java

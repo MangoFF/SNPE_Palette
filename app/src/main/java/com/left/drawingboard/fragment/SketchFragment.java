@@ -3,6 +3,7 @@ package com.left.drawingboard.fragment;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -23,6 +24,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
@@ -71,6 +74,9 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
     ImageView Sketch_preview=null;
     ImageView suibmit=null;
     TextView levelname=null;
+    ImageView result_img=null;
+    TextView  result_txt=null;
+    public TextView debug=null;
     private int seekBarStrokeProgress, seekBarEraserProgress;
     private View popupStrokeLayout, popupEraserLayout;
     private ImageView strokeImageView, eraserImageView;
@@ -87,7 +93,8 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
     private int mScreenHeight;
     int level=-1;
     MainActivity mContext;
-    String[] ClassName={"flowers","grass"};
+    String[] ClassName={"airplane","banana","baseball","bicycle","bird","book","bulldozer","cake","camel","camera","cannon","car","cat","chair","computer","cookie","crown","dog","ear","eye","fish","flower","hand","hat","horse","key","keyboard","knife","ladder","monkey","mouse","nose"};
+
     @SuppressLint("ValidFragment")
     public SketchFragment(int level_id,MainActivity context)
     {
@@ -121,6 +128,7 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
         Sketch_preview=view.findViewById(R.id.sketch_preview);
         suibmit= view.findViewById(R.id.submit_button);
         levelname=view.findViewById(R.id.level_name);
+        debug=view.findViewById(R.id.debug);
 
         Resources res = getContext().getResources();
         Sketch_preview.setImageBitmap(BitmapFactory.decodeResource(res,res.getIdentifier(ClassName[level], "drawable", "com.left.drawingboard")));
@@ -142,7 +150,23 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
 
         return view;
     }
-
+    public void showDrawScore(String[] labels)
+    {
+        final AlertDialog.Builder alertDialog7 = new AlertDialog.Builder(getContext());
+        View view1 = View.inflate(getContext(), R.layout.sore_sub, null);
+        result_img = view1.findViewById(R.id.Result_Img);
+        result_txt = view1.findViewById(R.id.Result_Text);
+        alertDialog7
+                .setView(view1)
+                .create();
+        final AlertDialog show = alertDialog7.show();
+        result_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                result_txt.setText("Mango");
+            }
+        });
+    }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -213,11 +237,7 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
                         .negativeText("取消").callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
-                        //在这里写识别的代码
-                        mSketchView.erase();
-                        // 记得把ivPainted、ivOriginal置空
-                        ivPainted.setImageBitmap(null);
-                        ivOriginal.setImageBitmap(null);
+                        mContext.mController.classify(mSketchView.getBitmap());
                     }
                 }).build().show();
             }

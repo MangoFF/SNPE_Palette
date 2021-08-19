@@ -65,7 +65,7 @@ public class ClassifyImageWithUserBufferTf8Task extends AbstractClassifyImageTas
         mJavaExecuteTime = javaExecuteEnd - javaExecuteStart;
 
         float[] outputValues = dequantize(outputTensors.get(mOutputLayer), outputBuffers.get(mOutputLayer));
-        for (Pair<Integer, Float> pair : topK(1, outputValues)) {
+        for (Pair<Integer, Float> pair : topK(3, outputValues)) {
             result.add(mModel.labels[pair.first]);
             result.add(String.valueOf(pair.second));
         }

@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
+import android.view.View;
 
 
 import com.left.drawingboard.MainActivity;
@@ -176,15 +177,17 @@ public class ModelController extends
     public void classify(final Bitmap bitmap) {
         if (mNeuralNetwork != null && bitmap!=null) {
             AbstractClassifyImageTask task;
+            Bitmap bitmap_resize=Resize_bmp(bitmap,430,430);
+            //mview.fragment.map.setImageBitmap(bitmap_resize);
             switch (mNetworkTensorFormat) {
                 case UB_TF8:
                     ClassifyReturn=false;
-                    task = new ClassifyImageWithUserBufferTf8Task(this, mNeuralNetwork, bitmap, mModel);
+                    task = new ClassifyImageWithUserBufferTf8Task(this, mNeuralNetwork, bitmap_resize, mModel);
                     break;
                 case FLOAT:
                 default:
                     ClassifyReturn=false;
-                    task = new ClassifyImageWithFloatTensorTask(this, mNeuralNetwork, bitmap, mModel);
+                    task = new ClassifyImageWithFloatTensorTask(this, mNeuralNetwork, bitmap_resize, mModel);
                     break;
             }
             task.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);

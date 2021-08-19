@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/Result_Img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:srcCompat="@drawable/airplane" />
+
+        <TextView
+            android:id="@+id/Result_Text"
+            android:layout_width="117dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:text="MangoBig"
+            android:textAlignment="center" />
+    </FrameLayout>
+</LinearLayout>
