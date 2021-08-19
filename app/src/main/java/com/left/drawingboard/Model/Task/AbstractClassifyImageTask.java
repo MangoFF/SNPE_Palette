@@ -70,7 +70,7 @@ public abstract class AbstractClassifyImageTask extends AsyncTask<Bitmap, Void, 
             //mController.onClassificationResult(labels[0]);
             //mController.mview.ShowModelRes.setText(labels[0]);
             //mController.mview.fragment.resultShow.setVisibility(VISIBLE);
-            mController.mview.fragment.debug.setText(String.format("Class:%s Score:%s \nClass:%s Score:%s \nClass:%s Score:%s \n",labels[0],labels[1],labels[2],labels[3],labels[4],labels[5]));
+            //mController.mview.fragment.mSketchView.ReshowPath();
             mController.mview.fragment.showDrawScore(labels);
         } else {
             //mController.onClassificationFailed();

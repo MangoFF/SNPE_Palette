@@ -37,6 +37,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.larswerkman.holocolorpicker.ColorPicker;
@@ -63,7 +64,7 @@ import jp.co.cyberagent.android.gpuimage.GPUImageSketchFilter;
 public class SketchFragment extends Fragment implements SketchView.OnDrawChangedListener {
     ImageView stroke;
     ImageView eraser;
-    SketchView mSketchView;
+    public SketchView mSketchView;
     ImageView undo;
     ImageView redo;
     ImageView erase;
@@ -76,7 +77,7 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
     TextView levelname=null;
     ImageView result_img=null;
     TextView  result_txt=null;
-    public TextView debug=null;
+    private View result;
     private int seekBarStrokeProgress, seekBarEraserProgress;
     private View popupStrokeLayout, popupEraserLayout;
     private ImageView strokeImageView, eraserImageView;
@@ -92,7 +93,7 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
     private int mScreenWidth;
     private int mScreenHeight;
     int level=-1;
-    MainActivity mContext;
+    public MainActivity mContext;
     String[] ClassName={"airplane","banana","baseball","bicycle","bird","book","bulldozer","cake","camel","camera","cannon","car","cat","chair","computer","cookie","crown","dog","ear","eye","fish","flower","hand","hat","horse","key","keyboard","knife","ladder","monkey","mouse","nose"};
 
     @SuppressLint("ValidFragment")
@@ -115,6 +116,7 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
         View view = inflater.inflate(R.layout.fragment_sketch, container, false);
         ButterKnife.bind(this, view);
         mSketchView=view.findViewById(R.id.drawing);
+        mSketchView.fragment=this;
         stroke=view.findViewById(R.id.sketch_stroke);
         eraser=view.findViewById(R.id.sketch_eraser);
         mSketchView=view.findViewById(R.id.drawing);
@@ -128,7 +130,6 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
         Sketch_preview=view.findViewById(R.id.sketch_preview);
         suibmit= view.findViewById(R.id.submit_button);
         levelname=view.findViewById(R.id.level_name);
-        debug=view.findViewById(R.id.debug);
 
         Resources res = getContext().getResources();
         Sketch_preview.setImageBitmap(BitmapFactory.decodeResource(res,res.getIdentifier(ClassName[level], "drawable", "com.left.drawingboard")));
@@ -152,20 +153,16 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
     }
     public void showDrawScore(String[] labels)
     {
-        final AlertDialog.Builder alertDialog7 = new AlertDialog.Builder(getContext());
-        View view1 = View.inflate(getContext(), R.layout.sore_sub, null);
-        result_img = view1.findViewById(R.id.Result_Img);
-        result_txt = view1.findViewById(R.id.Result_Text);
-        alertDialog7
-                .setView(view1)
-                .create();
-        final AlertDialog show = alertDialog7.show();
-        result_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                result_txt.setText("Mango");
-            }
-        });
+        PopupWindow popup = new PopupWindow(getActivity());
+        popup.setContentView(result);
+        popup.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+        popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        popup.setFocusable(true);
+
+        // 清除默认的半透明背景
+        popup.setBackgroundDrawable(new BitmapDrawable());
+        popup.showAtLocation(getView(), 17,0,0);
+        result_txt.setText(String.format("Class:%s Score:%s \nClass:%s Score:%s \nClass:%s Score:%s \n",labels[0],labels[1],labels[2],labels[3],labels[4],labels[5]));
     }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -237,7 +234,9 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
                         .negativeText("取消").callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
-                        mContext.mController.classify(mSketchView.getBitmap());
+
+                        mSketchView.ReshowPath();
+
                     }
                 }).build().show();
             }
@@ -293,6 +292,11 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
         popupStrokeLayout = inflaterStroke.inflate(R.layout.popup_sketch_stroke, null);
         LayoutInflater inflaterEraser = (LayoutInflater) getActivity().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         popupEraserLayout = inflaterEraser.inflate(R.layout.popup_sketch_eraser, null);
+        LayoutInflater inflatershowresult = (LayoutInflater) getActivity().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        result=inflaterEraser.inflate(R.layout.score, null);
+
+        result_img=result.findViewById(R.id.Result_Image);
+        result_txt=result.findViewById(R.id.Result_Text);
 
         // 实例化stroke、eraser弹出调色板黑色小圆球控件
         strokeImageView = popupStrokeLayout.findViewById(R.id.stroke_circle);

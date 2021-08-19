@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.os.Handler;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.Pair;
@@ -13,6 +14,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.ImageView;
+
+import com.left.drawingboard.fragment.SketchFragment;
 
 import java.util.ArrayList;
 
@@ -42,6 +45,7 @@ public class SketchView extends AppCompatImageView implements OnTouchListener {
     // 默认初始化的mode
     private int mode = STROKE;
 
+    public SketchFragment fragment;
     private OnDrawChangedListener onDrawChangedListener;
 
     public SketchView(Context context, AttributeSet attr) {
@@ -242,8 +246,30 @@ public class SketchView extends AppCompatImageView implements OnTouchListener {
     public void setOnDrawChangedListener(OnDrawChangedListener listener) {
         this.onDrawChangedListener = listener;
     }
+    Handler handler = new Handler();
+    private Runnable mTimeTask = new Runnable() {
+
+        @Override
+        public void run() {
+            if(undonePaths.size()>0)
+            {
+                redo();
+                handler.postDelayed(mTimeTask, 700);
+            }else
+            {
+                Bitmap bmp=getBitmap();
+                fragment.mContext.mController.classify(bmp);
+            }
+        }
+    };
+
 
     public interface OnDrawChangedListener {
         void onDrawChanged();
+    }
+    public void ReshowPath()
+    {
+        while(paths.size() >= 2) undo();
+        handler.postDelayed(mTimeTask,700);
     }
 }
