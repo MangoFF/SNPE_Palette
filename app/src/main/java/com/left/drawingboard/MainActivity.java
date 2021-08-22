@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //fragment
-        fragment=new SketchFragment(1,this);
+        //fragment=new SketchFragment(1,this);
         ft.add(R.id.fl_main,fragment ,FRAGMENT_TAG).commit();
 
         //model controller

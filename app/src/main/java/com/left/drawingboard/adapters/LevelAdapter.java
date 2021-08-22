@@ -5,6 +5,9 @@
 package com.left.drawingboard.adapters;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -17,8 +20,10 @@ import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.left.drawingboard.LevelActivity;
 import com.left.drawingboard.R;
 import com.left.drawingboard.beans.LevelInfoBean;
+import com.left.drawingboard.fragment.SketchFragment;
 
 import java.util.List;
 import java.util.Random;
@@ -27,10 +32,15 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewHolder
 
     private Context mContext;
     private List<LevelInfoBean> mlevelInfos;
-
-    public LevelAdapter(Context context, List<LevelInfoBean> levelInfos) {
+    private FragmentManager mManager;
+    public SketchFragment fragment;
+    public LevelActivity mActivity;
+    private final static String FRAGMENT_TAG = "SketchFragmentTag";
+    public LevelAdapter(Context context, List<LevelInfoBean> levelInfos,LevelActivity activity) {
         mContext = context;
         mlevelInfos = levelInfos;
+        mActivity=activity;
+        mManager=activity.getSupportFragmentManager();
     }
 
     @Override
@@ -76,6 +86,15 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewHolder
                 @Override
                 public void onClick(View v2) {
                     Toast.makeText(v2.getContext(), "Click on item", Toast.LENGTH_SHORT).show();
+                    FragmentTransaction ft = mManager.beginTransaction();
+                    //fragment
+                    fragment=new SketchFragment(1,mActivity);
+                    mActivity.fragment=fragment;
+                    ft.add(R.id.level,fragment ,FRAGMENT_TAG).commit();
+                    //model controller
+//        mController = new ModelController(this,(Application)this.getApplicationContext());
+                    //与mainActivity绑定
+//        mController.attach(this);
                 }
             });
         }

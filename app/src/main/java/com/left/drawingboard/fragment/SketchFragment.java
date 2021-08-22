@@ -43,6 +43,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.OpacityBar;
 import com.larswerkman.holocolorpicker.SVBar;
+import com.left.drawingboard.LevelActivity;
 import com.left.drawingboard.MainActivity;
 import com.left.drawingboard.R;
 import com.left.drawingboard.SketchView;
@@ -75,8 +76,11 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
     ImageView Sketch_preview=null;
     ImageView suibmit=null;
     TextView levelname=null;
-    ImageView result_img=null;
     TextView  result_txt=null;
+
+    ImageView  next=null;
+    ImageView  again=null;
+    ImageView star=null;
     private View result;
     private int seekBarStrokeProgress, seekBarEraserProgress;
     private View popupStrokeLayout, popupEraserLayout;
@@ -92,12 +96,14 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
     private Bitmap grayBmp;
     private int mScreenWidth;
     private int mScreenHeight;
+    private PopupWindow popup_score;
     int level=-1;
-    public MainActivity mContext;
+    int grad=0;
+    public LevelActivity mContext;
     String[] ClassName={"airplane","banana","baseball","bicycle","bird","book","bulldozer","cake","camel","camera","cannon","car","cat","chair","computer","cookie","crown","dog","ear","eye","fish","flower","hand","hat","horse","key","keyboard","knife","ladder","monkey","mouse","nose"};
 
     @SuppressLint("ValidFragment")
-    public SketchFragment(int level_id,MainActivity context)
+    public SketchFragment(int level_id, LevelActivity context)
     {
         level=level_id-1;
         mContext=context;
@@ -153,16 +159,34 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
     }
     public void showDrawScore(String[] labels)
     {
-        PopupWindow popup = new PopupWindow(getActivity());
-        popup.setContentView(result);
-        popup.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
-        popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        popup.setFocusable(true);
+        popup_score = new PopupWindow(getActivity());
+        popup_score.setContentView(result);
+        popup_score.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+        popup_score.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        popup_score.setFocusable(true);
 
         // 清除默认的半透明背景
-        popup.setBackgroundDrawable(new BitmapDrawable());
-        popup.showAtLocation(getView(), 17,0,0);
-        result_txt.setText(String.format("Class:%s Score:%s \nClass:%s Score:%s \nClass:%s Score:%s \n",labels[0],labels[1],labels[2],labels[3],labels[4],labels[5]));
+        popup_score.setBackgroundDrawable(new BitmapDrawable());
+        popup_score.showAtLocation(getView(), 17,0,0);
+        grad=Math.round(Float.valueOf(labels[1]).floatValue());
+        if(grad>=3)
+        {
+            grad=3;
+        }
+        if(star!=null)
+        {
+            if(grad==0)
+                star.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.no_star));
+            else if(grad==1)
+                star.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.one_star));
+            else if(grad==2)
+                star.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.two_star));
+            else if(grad==3)
+                star.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.three_star));
+        }
+
+        result_txt.setText(String.format("%s:%dStar!",labels[0], grad));
+
     }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -241,6 +265,8 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
                 }).build().show();
             }
         });
+
+
 //        // 保存画图
 //        sketchSave.setOnClickListener(new OnClickListener() {
 //            @Override
@@ -293,11 +319,34 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
         LayoutInflater inflaterEraser = (LayoutInflater) getActivity().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         popupEraserLayout = inflaterEraser.inflate(R.layout.popup_sketch_eraser, null);
         LayoutInflater inflatershowresult = (LayoutInflater) getActivity().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+
         result=inflaterEraser.inflate(R.layout.score, null);
-
-        result_img=result.findViewById(R.id.Result_Image);
+        //result_img=result.findViewById(R.id.Result_Image);
         result_txt=result.findViewById(R.id.Result_Text);
+        next=result.findViewById(R.id.next_level);
+        again=result.findViewById(R.id.try_again);
+        star=result.findViewById(R.id.Star);
+        next.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(popup_score!=null)
+                    popup_score.dismiss();
+                mContext.changeLevelState(level,grad);
+                mContext.getSupportFragmentManager().beginTransaction().remove(mContext.fragment).commit();
 
+            }
+        });
+        again.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(popup_score!=null)
+                popup_score.dismiss();
+                mSketchView.erase();
+                // 记得把ivPainted、ivOriginal置空
+                ivPainted.setImageBitmap(null);
+                ivOriginal.setImageBitmap(null);
+            }
+        });
         // 实例化stroke、eraser弹出调色板黑色小圆球控件
         strokeImageView = popupStrokeLayout.findViewById(R.id.stroke_circle);
         eraserImageView = popupEraserLayout.findViewById(R.id.stroke_circle);

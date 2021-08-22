@@ -11,8 +11,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
+import com.left.drawingboard.Model.ModelController;
 import com.left.drawingboard.adapters.LevelAdapter;
 import com.left.drawingboard.beans.LevelInfoBean;
+import com.left.drawingboard.fragment.SketchFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,8 @@ public class LevelActivity extends AppCompatActivity {
     private LinearLayoutManager layoutManager;
     private LevelAdapter levelAdapter;
     private List<LevelInfoBean> levels = new ArrayList<>();
-
+    public ModelController mController;
+    public SketchFragment fragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +36,14 @@ public class LevelActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.level_list);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
         recyclerView.setLayoutManager(layoutManager);
-        levelAdapter = new LevelAdapter(this, levels);
-
+        levelAdapter = new LevelAdapter(this, levels,this);
+        //*******************MANGO*******************************
+       // model controller
+        mController = new ModelController(this,getApplication());
+        //与mainActivity绑定
+        mController.attach(this);
+        //*******************MANGO*******************************
         recyclerView.setAdapter(levelAdapter);
-
         // Test
         Button btn = findViewById(R.id.test_button);
         btn.setOnClickListener(new View.OnClickListener() {

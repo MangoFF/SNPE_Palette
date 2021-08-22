@@ -20,6 +20,7 @@ import android.os.Handler;
 import android.view.View;
 
 
+import com.left.drawingboard.LevelActivity;
 import com.left.drawingboard.MainActivity;
 import com.left.drawingboard.Model.AbstractViewController;
 import com.left.drawingboard.Model.Model;
@@ -44,7 +45,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class ModelController extends
-        AbstractViewController<MainActivity> {
+        AbstractViewController<LevelActivity> {
     //支持的Tensor各式
     public enum SupportedTensorFormat {
         FLOAT,
@@ -74,7 +75,7 @@ public class ModelController extends
 
     public Bitmap mCurrentBitmap2Classify;
     //主窗口的类，用于回显
-    public MainActivity mview;
+    public LevelActivity mview;
 
     public final Context mContext;
 
@@ -100,7 +101,7 @@ public class ModelController extends
     }
 
     @Override
-    protected void onViewAttached(final MainActivity view) {
+    protected void onViewAttached(final LevelActivity view) {
         mview=view;
         //设置监视器，检测到文件变化的时候导入模型，否则就直接导入模型
         final ContentResolver contentResolver = mContext.getContentResolver();
@@ -114,7 +115,7 @@ public class ModelController extends
 
     }
     @Override
-    protected void onViewDetached(final MainActivity view) {
+    protected void onViewDetached(final LevelActivity view) {
         final ContentResolver contentResolver = mContext.getContentResolver();
         contentResolver.unregisterContentObserver(mModelExtractionObserver);
         contentResolver.unregisterContentObserver(mModelExtractionFailedObserver);
