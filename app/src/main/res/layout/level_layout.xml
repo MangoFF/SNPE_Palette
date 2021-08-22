@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_level_main"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Button
+        android:id="@+id/test_button"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/white"
+        android:text="Test"
+        android:textColor="@color/black"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/bg_cloud" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/level_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
-        app:stackFromEnd="true" >
+        android:layout_height="match_parent" >
 
     </android.support.v7.widget.RecyclerView>
 
 
 
-</android.support.constraint.ConstraintLayout>
+
+</RelativeLayout>
