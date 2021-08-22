@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
         ft.add(R.id.fl_main,fragment ,FRAGMENT_TAG).commit();
 
         //model controller
-        mController = new ModelController(this,(Application)this.getApplicationContext());
+//        mController = new ModelController(this,(Application)this.getApplicationContext());
         //与mainActivity绑定
-        mController.attach(this);
+//        mController.attach(this);
     }
 
 //    // 添加右上角的actionbar
