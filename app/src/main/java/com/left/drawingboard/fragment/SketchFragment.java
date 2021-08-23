@@ -69,11 +69,11 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
     ImageView undo;
     ImageView redo;
     ImageView erase;
+    ImageView sketch_preview=null;
 //    ImageView sketchSave;
 //    ImageView sketchPhoto;
     ImageView ivPainted;
     ImageView ivOriginal;
-    ImageView Sketch_preview=null;
     ImageView suibmit=null;
     TextView levelname=null;
     TextView  result_txt=null;
@@ -105,7 +105,7 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
     @SuppressLint("ValidFragment")
     public SketchFragment(int level_id, LevelActivity context)
     {
-        level=level_id-1;
+        level=level_id;
         mContext=context;
     }
 
@@ -133,13 +133,12 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
 //        sketchPhoto=view.findViewById(R.id.sketch_photo);
         ivPainted=view.findViewById(R.id.iv_painted);
         ivOriginal=view.findViewById(R.id.iv_original);
-        Sketch_preview=view.findViewById(R.id.sketch_preview);
         suibmit= view.findViewById(R.id.submit_button);
         levelname=view.findViewById(R.id.level_name);
-
+        sketch_preview=view.findViewById(R.id.preview);
         Resources res = getContext().getResources();
-        Sketch_preview.setImageBitmap(BitmapFactory.decodeResource(res,res.getIdentifier(ClassName[level], "drawable", "com.left.drawingboard")));
-        levelname.setText(ClassName[level]);
+        sketch_preview.setImageBitmap(BitmapFactory.decodeResource(res,res.getIdentifier(ClassName[level-1], "drawable", "com.left.drawingboard")));
+        levelname.setText(String.format("Level %d %s",level,ClassName[level-1]));
 
         DisplayMetrics dm = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -173,7 +172,7 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
         {
             grad=3;
         }
-        if(star!=null)
+        if(star!=null &&labels[0].equals(ClassName[level-1]))
         {
             if(grad==0)
                 star.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.no_star));
@@ -183,9 +182,17 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
                 star.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.two_star));
             else if(grad==3)
                 star.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.three_star));
+            result_txt.setText(String.format("%d Star", grad));
+            mContext.changeLevelState(level,grad);
+        }else
+        {
+            star.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.no_star));
+            result_txt.setText(String.format("%d Star", 0));
+            mContext.changeLevelState(level,0);
         }
 
-        result_txt.setText(String.format("%s:%dStar!",labels[0], grad));
+
+
 
     }
     @Override

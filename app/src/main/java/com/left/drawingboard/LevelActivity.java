@@ -45,21 +45,21 @@ public class LevelActivity extends AppCompatActivity {
         //*******************MANGO*******************************
         recyclerView.setAdapter(levelAdapter);
         // Test
-        Button btn = findViewById(R.id.test_button);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeLevelState(1, 0);
-                levelAdapter.notifyDataSetChanged();
-            }
-        });
+//        Button btn = findViewById(R.id.test_button);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                changeLevelState(1, 0);
+//                levelAdapter.notifyDataSetChanged();
+//            }
+//        });
 
     }
 
     void initData() {
-        int cnt = 4;
+        int cnt = 32;
         for (int i = 0; i < cnt; ++i) {
-            levels.add(new LevelInfoBean(i+1, 3, i));
+            levels.add(new LevelInfoBean(i+1, 0, i));
         }
     }
 
@@ -75,5 +75,6 @@ public class LevelActivity extends AppCompatActivity {
         if (t == null) return;
 
         t.setMgrade(grade);
+        levelAdapter.notifyDataSetChanged();
     }
 }

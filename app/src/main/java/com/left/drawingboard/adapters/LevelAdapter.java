@@ -81,14 +81,14 @@ public class LevelAdapter extends RecyclerView.Adapter<LevelAdapter.MyViewHolder
             imageButton = view.findViewById(R.id.item_button);
             grade = view.findViewById(R.id.star_grade);
             levelNo = view.findViewById(R.id.level_no);
-
+            String text=levelNo.getText().toString();
+            level=Integer.valueOf(text).intValue();
             imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v2) {
-                    Toast.makeText(v2.getContext(), "Click on item", Toast.LENGTH_SHORT).show();
                     FragmentTransaction ft = mManager.beginTransaction();
                     //fragment
-                    fragment=new SketchFragment(1,mActivity);
+                    fragment=new SketchFragment(level,mActivity);
                     mActivity.fragment=fragment;
                     ft.add(R.id.level,fragment ,FRAGMENT_TAG).commit();
                     //model controller

@@ -6,15 +6,6 @@
     android:id="@+id/level"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Button
-        android:id="@+id/test_button"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:background="@color/white"
-        android:text="Test"
-        android:textColor="@color/black"/>
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
