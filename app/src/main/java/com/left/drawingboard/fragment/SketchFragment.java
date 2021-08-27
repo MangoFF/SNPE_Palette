@@ -74,6 +74,7 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
 //    ImageView sketchPhoto;
     ImageView ivPainted;
     ImageView ivOriginal;
+    ImageView score_back=null;
     ImageView suibmit=null;
     TextView levelname=null;
     TextView  result_txt=null;
@@ -137,8 +138,12 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
         levelname=view.findViewById(R.id.level_name);
         sketch_preview=view.findViewById(R.id.preview);
         Resources res = getContext().getResources();
-        sketch_preview.setImageBitmap(BitmapFactory.decodeResource(res,res.getIdentifier(ClassName[level-1], "drawable", "com.left.drawingboard")));
-        levelname.setText(String.format("Level %d %s",level,ClassName[level-1]));
+        Bitmap bitmap=BitmapFactory.decodeResource(res,res.getIdentifier(ClassName[level-1], "drawable", "com.left.drawingboard"));
+        if(bitmap!=null)
+        {
+            sketch_preview.setImageBitmap(bitmap);
+        }
+        levelname.setText(String.format("Level %d\n%s",level,ClassName[level-1]));
 
         DisplayMetrics dm = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -175,17 +180,36 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
         if(star!=null &&labels[0].equals(ClassName[level-1]))
         {
             if(grad==0)
-                star.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.no_star));
+            { star.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.no_star));
+                Resources res = getContext().getResources();
+                score_back.setImageBitmap(BitmapFactory.decodeResource(res,res.getIdentifier("score_back_failure", "drawable", "com.left.drawingboard")));
+            }
+
             else if(grad==1)
+            {
                 star.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.one_star));
+                Resources res = getContext().getResources();
+                score_back.setImageBitmap(BitmapFactory.decodeResource(res,res.getIdentifier("score_back", "drawable", "com.left.drawingboard")));
+            }
+
             else if(grad==2)
+            {
+                Resources res = getContext().getResources();
+                score_back.setImageBitmap(BitmapFactory.decodeResource(res,res.getIdentifier("score_back", "drawable", "com.left.drawingboard")));
                 star.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.two_star));
+            }
             else if(grad==3)
+            {
+                Resources res = getContext().getResources();
+                score_back.setImageBitmap(BitmapFactory.decodeResource(res,res.getIdentifier("score_back", "drawable", "com.left.drawingboard")));
                 star.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.three_star));
+            }
             result_txt.setText(String.format("%d Star", grad));
             mContext.changeLevelState(level,grad);
         }else
         {
+            Resources res = getContext().getResources();
+            score_back.setImageBitmap(BitmapFactory.decodeResource(res,res.getIdentifier("score_back_failure", "drawable", "com.left.drawingboard")));
             star.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.no_star));
             result_txt.setText(String.format("%d Star", 0));
             mContext.changeLevelState(level,0);
@@ -329,6 +353,7 @@ public class SketchFragment extends Fragment implements SketchView.OnDrawChanged
 
         result=inflaterEraser.inflate(R.layout.score, null);
         //result_img=result.findViewById(R.id.Result_Image);
+        score_back=result.findViewById(R.id.score_back);
         result_txt=result.findViewById(R.id.Result_Text);
         next=result.findViewById(R.id.next_level);
         again=result.findViewById(R.id.try_again);
